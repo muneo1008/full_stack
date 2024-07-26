@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원관리</title>
+    <style>
+        #newE{
+            background: red;
+            color: white;
+            width: 15%;
+            font-size: large;
+        }
+        .t1{
+            width: 80%;
+        }
+        .t1 td{
+            text-align: left;
+            vertical-align: top;
+            border-top: 1px solid black;
+        }
+        th{
+            text-align: left;
+        }
+        .t2 td{
+            vertical-align: middle;
+        }
+        table{
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <h2>HTML Forms</h2>
+    <P>사용자 정보 입력</P>
+    <div>
+        <form action="form_ok.php" method="post">
+            
+            <div>
+                <label for="uName">이름</label>
+                <input type="text" id="uName" name="uName"><br>
+                <label for="uDepartment">부서</label>
+                <input type="text" id="uDepartment" name="uDepartment"><br>
+                <label for="uPosition">직책</label>
+                <input type="text" id="uPosition" name="uPosition"><br>
+        
+                <label for="uImg">사진</label>
+                <input type="file" id="chooseFile" name="chooseFile" accept="image/*">
+            </div>
+        
+            <div>
+                <br>
+                <input type="button" id="newE" value="새 사원 추가" style="border-radius: 6px;"><hr>
+                <input type="button" id="selectDelete" value="선택 삭제"> |검색:
+                <select>
+                    <option>이름</option>
+                    <option>어쩌고</option>
+                    <option>저쩌고</option>
+                </select>
+                <input type="text" id="searchText" name="searchText"><br>
+            </div>
+            <br>
+            <div>
+                <table class="t1" border="1">
+                    <tr bgColor="orange" height="10%">
+                        <th><input type="checkbox"></th>
+                        <th>번호</th>
+                        <th>사진</th>
+                        <th>사원명</th>
+                        <th>부서</th>
+                        <th>직급</th>
+                        <th>수정</th>
+                        <th>삭제</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><input type="checkbox"></td>
+                        <td rowspan="3">1043</td>
+                        <td><img src="다운로드.jpeg"></td>
+                        <td>홍길동</td>
+                        <td>개발</td>
+                        <td>대리</td>
+                        <td rowspan="3"><input type="button" id="editB" value="edit"></td>
+                        <td rowspan="3"><input type="button" id="deleteB" value="delete"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" id="board">
+                            <table class="t2" width="100%" height="80%" style="border-bottom: 1px solid black;">
+                                <tr>
+                                    <th>번호</th>
+                                    <th>댓글 내용</th>
+                                    <th>작성자</th>
+                                    <th>수정</th>
+                                    <th>삭제</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>멋진 사진입니다.</td>
+                                    <td>박문수</td>
+                                    <td>수정</td>
+                                    <td>삭제</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>좋아요^^퍼가요~</td>
+                                    <td>일지매</td>
+                                    <td>수정</td>
+                                    <td>삭제</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <div style="text-align: center; ">
+                                            <label for="writeText">댓글</label>
+                                            <input type="text" id="writeText" name="writeText" style="width: 50%;">
+                                            <label for="writer">작성자</label>
+                                            <input type="text" id="writer" name="writer" style="width:15%">
+                                            <input type="button" id="inputText" value="댓글입력">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    
+</body>
+</html>

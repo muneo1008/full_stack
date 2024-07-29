@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day03</title>
+    <script>
+        // id 값으로 태그를 객체로 참조
+        
+        window.onload = function(){
+            console.dir(window.document);
+            var demo = document.getElementById('demo');
+            var clickBtn = document.getElementById('clickBtn');
+            var resetBtn = document.getElementById('resetBtn');
+            //console.log(demo);
+            //console.log(changeBtn);
+            //console.log(resetBtn);
+            // 버튼에 클립 이벤트 헨들러를 추가해서 내용이 변경 되도록하기
+            //changeBtn.addEventListener('click', function() {demo.innerHTML = 'Change';});
+
+            clickBtn.onclick = function(){
+                document.getElementById("demo").innerHTML = "Change";
+                document.body.bgColor='yellow';
+            }
+            resetBtn.onclick = function(){
+                document.getElementById("demo").innerHTML = "Reset";
+                document.body.bgColor='white';
+            }
+        }
+        
+        
+    </script>
+</head>
+<body>
+    <h2>What Can JavaScript Do?</h2>
+
+    <!-- 인터널 전용 방식 -->
+    <p id="demo">JavaScript can change HTML content.</p>
+    <button type="button" id="clickBtn">Click</button>
+    <button type="button" id="resetBtn">Reset</button>
+    
+</body>
+</html>

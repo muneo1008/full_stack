@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day03</title>
+    <script>
+
+        window.onload = function(){
+            var memo = document.getElementById('memo');
+
+            var demo = document.querySelector('#demo');
+            var clickBtn = document.querySelector('#clickBtn');
+            var resetBtn = document.querySelector('#resetBtn');
+            
+            clickBtn.onclick = function(){;
+                demo.innerHTML = memo.value;
+            }
+            resetBtn.onclick = function(){
+                demo.innerHTML = "JavaScript can change HTML content.";
+                memo.value = null;
+                memo.focus();
+            }
+            //Enter키를 누르면 메모를 입력하기
+            memo.onkeypress = function(e){
+                if(e.keyCode === 13){
+                    demo.innerHTML = memo.value;
+                }
+            }
+        }
+        
+        
+    </script>
+</head>
+<body>
+    <h2>What Can JavaScript Do?</h2>
+    <input type="text" id="memo">
+
+    <p id="demo">JavaScript can change HTML content.</p>
+    <button type="button" id="clickBtn">Click</button>
+    <button type="button" id="resetBtn">Reset</button>
+    
+</body>
+</html>

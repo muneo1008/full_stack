@@ -15,13 +15,12 @@
             var clickBtn = document.querySelector('#clickBtn');
             var resetBtn = document.querySelector('#resetBtn');
             
-            clickBtn.onclick = function(){
-                var inputText = document.getElementById('memo').value;
-                document.getElementById("demo").innerHTML = inputText;
+            clickBtn.onclick = function(){;
+                document.getElementById("demo").innerHTML = memo.value;
             }
             resetBtn.onclick = function(){
                 document.getElementById("demo").innerHTML = "JavaScript can change HTML content.";
-                document.getElementById('memo').value = null;
+                memo.value = null;
             }
         }
         

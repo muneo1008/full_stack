@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day03</title>
+    <script>
+        // id 값으로 태그를 객체로 참조
+        
+        window.onload = function(){
+            console.dir(window.document);
+            var memo = document.getElementById('memo');
+            //querySelector()는 CSS의 선택기(selector)
+            var demo = document.querySelector('#demo');
+            var clickBtn = document.querySelector('#clickBtn');
+            var resetBtn = document.querySelector('#resetBtn');
+            
+            clickBtn.onclick = function(){
+                var inputText = document.getElementById('memo').value;
+                document.getElementById("demo").innerHTML = inputText;
+            }
+            resetBtn.onclick = function(){
+                document.getElementById("demo").innerHTML = "Reset";
+            }
+        }
+        
+        
+    </script>
+</head>
+<body>
+    <h2>What Can JavaScript Do?</h2>
+    <input type="text" id="memo">
+    <!-- 인터널 전용 방식 -->
+    <p id="demo">JavaScript can change HTML content.</p>
+    <button type="button" id="clickBtn">Click</button>
+    <button type="button" id="resetBtn">Reset</button>
+    
+</body>
+</html>

@@ -11,16 +11,18 @@
             console.dir(window.document);
             var memo = document.getElementById('memo');
             //querySelector()는 CSS의 선택기(selector)
+            // var은 범위가 함수 단위, let은 범위가 블럭 단위
             var demo = document.querySelector('#demo');
             var clickBtn = document.querySelector('#clickBtn');
             var resetBtn = document.querySelector('#resetBtn');
             
             clickBtn.onclick = function(){;
-                document.getElementById("demo").innerHTML = memo.value;
+                demo.innerHTML = memo.value;
             }
             resetBtn.onclick = function(){
-                document.getElementById("demo").innerHTML = "JavaScript can change HTML content.";
+                demo.innerHTML = "JavaScript can change HTML content.";
                 memo.value = null;
+                memo.focus();
             }
         }
         

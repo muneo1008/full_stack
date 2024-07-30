@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day03</title>
+    <script>
+        var todoList = [
+            {seq:101, title:"여행하기", done:false},
+            {seq:102, title:"공부하기", done:true},
+            {seq:103, title:"팀 프로젝트 하기", done:false},
+            {seq:104, title:"밥 먹기", done:false}
+        ];
+        var seqCount = 101;
+
+        window.onload = function(){
+            var memo = document.getElementById('memo');
+            var demo = document.querySelector('#demo');
+            var clickBtn = document.querySelector('#clickBtn');
+            var resetBtn = document.querySelector('#resetBtn');
+            var searchBtn = document.getElementById('searchBtn');
+            var searchTxt = document.getElementById('searchTxt');
+
+            function drawList(){
+                demo.innerHTML = null;
+                todoList.forEach(function(todoObj){
+                    demo.innerHTML +=  
+                    `<tr align="center">
+                        <td><input type="checkbox"></td>
+                        <td>${todoObj.title}</td>
+                        <td><input type="button" value="수정"></td>
+                        <td><input type="button" value="삭제" id='deletBtn'></td>
+                    </tr>`;
+                })
+            }
+            drawList();
+            var handlerEvent = function(e){
+                todoList.push({seq:seqCount++,title:memo.value,done:false});
+                drawList();
+                memo.value = null;
+                memo.focus();
+            }
+            clickBtn.addEventListener('click', handlerEvent);
+            memo.onkeypress = function(e){
+                if(e.keyCode === 13){
+                    handlerEvent(e);
+                }
+            }
+            
+            var search = function(e){
+                demo.innerHTML = null;
+                todoList.forEach(function(todoObj){
+                    var text = todoObj.title;
+                    var index = text.indexOf(searchTxt.value);
+                    if(index > -1){
+                        demo.innerHTML +=  `<tr align="center">
+                            <td><input type="checkbox"></td>
+                            <td>${todoObj.title}</td>
+                            <td><input type="button" value="수정"></td>
+                            <td><input type="button" value="삭제" id='deletBtn'></td>
+                        </tr>`;
+                    }
+                })
+            }
+
+            
+            //삭제 미구현
+            //var deleteBtn = document.getElementsByTagName('input');
+
+            //var deletTable = function(e){}
+            //deleteBtn.addEventListener('click', deletTable);
+            //리셋버튼
+            resetBtn.addEventListener('click', drawList);
+            //검색버튼
+            searchBtn.addEventListener('click',search);
+            
+            
+        }
+        
+        
+    </script>
+</head>
+<body>
+    <h2>Todo List</h2>
+    
+    <input type="text" id="memo">
+    <button type="button" id="clickBtn">Click</button>
+    <button type="button" id="resetBtn">Reset</button><hr>
+    <input type="text" id="searchTxt">
+    <button type="button" id="searchBtn">Search</button><hr>
+
+    <table border="1" width="80%">
+        <thead>
+            <tr>
+                <th>선택</th>
+                <th>할일</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+        <tbody id="demo">
+            
+        </tbody>
+    </table>
+    
+</body>
+</html>

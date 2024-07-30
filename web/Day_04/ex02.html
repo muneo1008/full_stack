@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //getElementssByClassName()는 리턴형 리스트(HtmlCollection) 형태이다.
+        function calc(){
+            var num1 = document.getElementById('num1');
+            var num2 = document.getElementById('num2');
+            var oper = document.getElementById('oper');
+            var resultArea = document.getElementById('resultArea');
+            var result;
+
+            if(oper.value === '+'){
+                resultArea.innerHTML = parseInt(num1.value) + parseInt(num2.value);
+            }else if(oper.value === '*'){
+                resultArea.innerHTML = parseInt(num1.value) * parseInt(num2.value);
+            }else if(oper.value==='/'){
+                resultArea.innerHTML = parseInt(num1.value) / parseInt(num2.value);
+            }else{
+                result = parseInt(num1.value) - parseInt(num2.value);
+                if(result < 0){
+                    result *= -1;
+                }
+                resultArea.innerHTML = result;
+            }
+            
+        }
+    </script>
+</head>
+<body>
+    <h1>계산기</h1>
+    <form action="">
+        <fieldset>
+            <legend>계산기</legend>
+            <input type="text" size="2" id="num1">
+
+            <select name="" id="oper">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+
+            <input type="text" size="2" id="num2">
+            <input type="button" value="=" id="resultBtn" onclick="calc()">
+            <span id="resultArea">0</span>
+        </fieldset>
+    </form>
+</body>
+</html>

@@ -20,7 +20,9 @@
             var resetBtn = document.querySelector('#resetBtn');
             var searchBtn = document.getElementById('searchBtn');
             var searchTxt = document.getElementById('searchTxt');
-
+            var deleteBtn = document.getElementsByName('delBtn');
+            
+            
             function drawList(){
                 demo.innerHTML = null;
                 todoList.forEach(function(todoObj){
@@ -29,7 +31,7 @@
                         <td><input type="checkbox"></td>
                         <td>${todoObj.title}</td>
                         <td><input type="button" value="수정"></td>
-                        <td><input type="button" value="삭제" id='deletBtn'></td>
+                        <td><input type="button" value="삭제" name='delBtn' id='delBtn'></td>
                     </tr>`;
                 })
             }
@@ -39,6 +41,10 @@
                 drawList();
                 memo.value = null;
                 memo.focus();
+                deleteBtn.forEach(element => element.addEventListener('click', function(e){
+                    e.currentTarget.parentNode.parentNode.parentNode.removeChild(e.currentTarget.parentNode.parentNode);
+                }))
+                
             }
             clickBtn.addEventListener('click', handlerEvent);
             memo.onkeypress = function(e){
@@ -57,18 +63,21 @@
                             <td><input type="checkbox"></td>
                             <td>${todoObj.title}</td>
                             <td><input type="button" value="수정"></td>
-                            <td><input type="button" value="삭제" id='deletBtn'></td>
+                            <td><input type="button" value="삭제" name='delBtn'></td>
                         </tr>`;
                     }
                 })
+                deleteBtn.forEach(element => element.addEventListener('click', function(e){
+                    e.currentTarget.parentNode.parentNode.parentNode.removeChild(e.currentTarget.parentNode.parentNode);
+                }))
             }
 
             
             //삭제 미구현
-            //var deleteBtn = document.getElementsByTagName('input');
-
-            //var deletTable = function(e){}
-            //deleteBtn.addEventListener('click', deletTable);
+            
+            deleteBtn.forEach(element => element.addEventListener('click', function(e){
+                e.currentTarget.parentNode.parentNode.parentNode.removeChild(e.currentTarget.parentNode.parentNode);
+            }))
             //리셋버튼
             resetBtn.addEventListener('click', drawList);
             //검색버튼

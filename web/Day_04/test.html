@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+    <script>
+
+        var todoList = JSON.parse(localStorage.getItem('todoList')) || [
+
+            {seq:101, title:"여행하기", done:false},
+
+            {seq:102, title:"포트폴리오 만들기", done:true},
+
+            {seq:103, title:"팀 프로젝트 하기", done:false},
+
+            {seq:104, title:"엄마 생일 선물 준비하기", done:false},
+
+        ];
+
+        var seqCnt = todoList.length > 0 ? Math.max(...todoList.map(todo => todo.seq)) + 1 : 105;
+
+        
+
+        window.onload = function() {
+
+            var memoTxt = document.getElementById('memoTxt');
+
+            var demo = document.querySelector('#demo');
+
+            var clickBtn = document.querySelector('#clickBtn');
+
+            var resetBtn = document.querySelector('#resetBtn');
+
+            var searchBtn = document.querySelector('#searchBtn');
+
+            var searchTxt = document.getElementById('searchTxt');
+
+
+
+            // 삭제
+
+            window.handleDelEvt = function(btn) {
+
+                var trElement = btn.parentElement.parentElement;
+
+                var seq = parseInt(trElement.dataset.seq);
+
+                todoList = todoList.filter(todo => todo.seq !== seq);
+
+                localStorage.setItem("todoList", JSON.stringify(todoList));
+
+                drawList();
+
+                console.log('handleDelEvt 호출 ...', trElement.dataset.seq);
+
+            }
+
+
+
+            // 리스트 만들기
+
+            function drawList(filteredTodoList) {
+
+                demo.innerHTML = "";
+
+                (filteredTodoList || todoList).forEach(function(todoObj) {
+
+                    console.log(todoObj.seq, todoObj.title, todoObj.done);
+
+                    demo.innerHTML += `<tr align="center" data-seq="${todoObj.seq}">
+
+                        <td><input type="checkbox" onchange="window.aaaa(this)" ${todoObj.done ? "checked" : ""}></td>
+
+                        <td>${todoObj.title}</td>
+
+                        <td><button onclick="editClickHandle(this)">수정</button></td>
+
+                        <td><button onclick="handleDelEvt(this)">삭제</button></td>
+
+                    </tr>`;
+
+                });
+
+                localStorage.setItem("todoList", JSON.stringify(todoList));
+
+            }
+
+
+            drawList();
+
+
+
+            // 웹에 리스트 넣기
+
+            var handleEvent = function(event) {
+
+                todoList.push({seq:seqCnt++, title:memoTxt.value, done:false});
+
+                drawList();
+
+                memoTxt.value = "";
+
+                memoTxt.focus();
+
+            }
+
+            clickBtn.addEventListener('click', handleEvent);
+
+
+
+            resetBtn.addEventListener('click', function() {
+
+                todoList = [];
+
+                drawList();
+
+                memoTxt.focus();
+
+            });
+
+
+
+            searchBtn.addEventListener('click', function() {
+
+                var searchValue = searchTxt.value.toLowerCase();
+
+                var filteredTodoList = todoList.filter(function(todoObj) {
+
+                    return todoObj.title.toLowerCase().includes(searchValue);
+
+                });
+
+                drawList(filteredTodoList);
+
+            });
+
+
+
+            searchTxt.addEventListener('keyup', function(e) {
+
+                if (e.keyCode === 13) {
+
+                    var searchValue = searchTxt.value.toLowerCase();
+
+                    var filteredTodoList = todoList.filter(function(todoObj) {
+
+                        return todoObj.title.toLowerCase().includes(searchValue);
+
+                    });
+
+                    drawList(filteredTodoList);
+
+                }
+
+            });
+
+
+
+            memoTxt.onkeyup = function(event) {
+
+                if (event.keyCode === 13) {
+
+                    handleEvent(event);
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <h1>Todo List</h1>
+
+    메모: <input type="text" id="memoTxt">
+
+    <button type="button" id="clickBtn">Save</button>
+
+    <button type="button" id="resetBtn">Reset</button>
+
+    <hr>
+
+    검색: <input type="text" id="searchTxt">
+
+    <button id="searchBtn">검색</button>
+
+    <hr>
+
+    <table width="550" border="1">
+
+        <thead>
+
+            <tr>
+
+                <th>확인</th>
+
+                <th>할일</th>
+
+                <th>수정</th>
+
+                <th>삭제</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="demo">
+
+            
+
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

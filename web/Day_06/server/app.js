@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser')
 
-app.set('views', path.join(__dirname +'/views'));
+app.set('views', path.join(__dirname,'/views','index.html'));
 app.set('view engine','ejs');
 app.set('port',3000);
 
@@ -18,14 +18,12 @@ app.get("/", function(req,res){
 
     // end() 문자열을 화면에 출력
     //res.writeHead(200, {"Content-Type":"text/html; charset=UTF-8"});
-    //res.end("하핳하");
-    //res.end('{"hello":"world"}');
-    var obj = {no:120,name:"MUN"};
     //res.end(JSON.stringify(obj));
 
     // send는 수식이나 문자열을 화면에 보여준다
-    // writeHead는 생략
     //res.send(obj);
+    const filePath = path.join(__dirname,'views', 'index.html');
+    res.sendFile(filePath);
 });
 
 app.get('/data', function(req,res){
@@ -44,6 +42,7 @@ const todoList = [
     {no: 104,title:'운동하기',done:false},
     {no: 105,title:'꿀잠자기',done:false}
 ];
+var noSeq = 106;
 // AJAX를 REST 방식으로 처리(HTML 폼은 GET와 POST만 가능)
 // GET - 출력, 검색
 // Post - 입력
@@ -52,8 +51,69 @@ const todoList = [
 // FETCH - 부분수정
 // ...그 외
 
+// 검색
+app.get('/todo/search',function(req,res){
+    var keyword = req.query.keyword;
+    var newTodoList = todoList.filter(function(todo){
+        return todo.title.findIndex(keyword) != -1;
+    });
 
+
+    res.send(newTodoList);
+    
+});
+
+// 상세보기
 app.get('/todo',function(req,res){
+    if(req.query.no){
+        var no = req.query.no;
+        var idx = todoList.filter(function(todo){
+            return todo.no == no;
+        });
+        if(idx != -1){
+            res.send(todoList[idx]);
+        }else{
+            res.send(null);
+        }
+        return;
+    }
+    
+    res.send(todoList);
+});
+
+// 입력
+app.post('/todo/input',function(req,res){
+    var title = req.body.title;
+    todoList.push({no:noSeq++,title,done:false});
+    res.send(todoList);
+});
+
+// 수정
+app.put('/todo/edit',function(req,res){
+    //var no = req.body.no;
+    //var title = req.body.title;
+    //var done = req.body.done; // 문자열로 받아옴 boolean으로 변경해야함
+    var todo = req.body;
+    console.dir(todo);
+    var idx = todoList.findIndex(function(t){
+        return t.no == todo.no;
+    });
+    if(idx != -1){
+        todoList[idx] = todo;
+    }
+
+    res.send(todoList);
+});
+
+// 삭제
+app.delete('/todo/delete',function(req,res){
+    var no = parseInt(req.body.no);
+    var idx = todoList.findIndex(function(t){
+        return t.no == no;
+    });
+    if(idx != -1){
+        todoList.splice(idx,1);
+    }
     res.send(todoList);
 });
 

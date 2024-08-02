@@ -61,10 +61,32 @@ app.get('/saram/edit', function(req, res) {
 
 app.get('/saram/update', function(req, res) {
     console.log("GET - /saram/update >>> ", req.query);
-    // saramList에서 해당 정보를 찾아서 update 하기.
-    res.send(req.query);
+    var idx = saramList.findIndex(function(saram) {
+        return saram.no == req.query.no;
+    });
+    var saram = req.query;
+    if(idx != 1){
+        saramList[idx] = saram;
+    }
+    res.redirect('/saram');
 });
-
+app.get('/saram/delete', function(req, res) {
+    console.log("GET - /saram/delete >>> ", req.query);
+    var idx = saramList.findIndex(function(saram) {
+        return saram.no == req.query.no;
+    });
+    saramList.splice(idx,1);
+    res.redirect('/saram');
+});
+app.get('/saram/saramForm', function(req, res) {
+    res.redirect('/saramForm.html');
+})
+app.get('/saram/input', function(req, res) {
+    console.log('GET - /saram/add >>>> no: ' + req.query.no); //req.query.no = ?no=번호 에서 번호가 된다.
+    var saram = req.query;
+    saramList.push(saram);
+    res.redirect('/saram');
+})
 const server = http.createServer(app);
 server.listen(port, function() {
     console.log("서버 실행 중 >>> http://localhost:"+port);

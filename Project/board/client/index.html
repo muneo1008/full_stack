@@ -111,7 +111,7 @@
                     <td rowspan="2"><input type="checkbox" name="" id=""></td>
                     <td rowspan="2">1043</td>
                     <td>
-                        <img src="img/img01.png" alt="사원1의 사진">
+                        <img src="" alt="사원1의 사진">
                     </td>
                     <td>홍길동</td>
                     <td>개발</td>
@@ -157,27 +157,6 @@
             <copy>(c) Comstudy school</copy>
         </div>
     </div>
-    <script>
-        $(document).ready(function(){
-            $("#newMemBtn").click(getMemberList); //id="listButton"인 태그에 click하면 function getMemberList() 실행
-        });
-        function getMemberList(){
-            $.ajax({
-                url:"list.jsp",                    //list.jsp에 AJAX요청
-                success:function(data){
-                    let obj=JSON.parse(data);      //data를 받아와서 JSON형태로 변환
-                    let array=["<ol>"]; 
-                    obj["member_list"].forEach(
-                            member =>  array.push("<li>"+member.id+"</li>")    
-                            //JSON에 있는 member.id의 value를 li태그에 넣어서 array에 넣어줌
-                    );
-                    array.push("</ol>");                                   
-         
-                    $("#result").html(array.join(""));  
-                    //array의 요소들을 다 합쳐서 하나로 만든후 id="result"인 태그에 html로 출력
-                }
-            });    
-        }
-    </script>
+    <script src="mem_list.js" defer></script>
 </body>
 </html>

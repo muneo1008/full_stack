@@ -4,31 +4,48 @@ const app = express()
 
 const port = 8000;
 
-// 뷰 템플릿 상용을 위한 설정
-app.set('views', 'views');
-app.set('view engine', 'ejs');
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-// /public/index.html을 보여주기 위한 static 폴더 지정.
-app.use(express.static('public'));
-
-// 사람 데이터 목록 선언
+let no = 102;
 const MemList = [
-    {no:101, boardText:"ㅎㅎ", name:"하하"}
+    {no:101, boardText:"ㅎㅎ", name:"하하"},
+    {no:102, boardText:"하이", name:"선일"},
+    {no:103, boardText:"사사", name:"준하"}
 ];
+let pNum = 3;
+const PostList = [
+    {pNum:1, PostText:"좋아요", name:"하하"},
+    {pNum:2, PostText:"하이", name:"선일"}
+];
+app.get('/api/memList', function(req, res) {
+    res.json(MemList);
 
-// localhost:8000/saram
-app.get('/', function(req, res) {
-    // ejs 페이지로 렌더링 
-    // - views/saram.ejs 페이지의 코드를 읽어와서 res.end()에 적용한다.
+});
+app.get('/api/postList', function(req, res) {
+    res.json(PostList);
+});
 
-    req.app.render('', {MemList}, function(err, html) {
-        res.end(html);
+app.post('/api/postList', function(req,res){
+    const {PostText, name} = req.body;
+    PostList.push({
+        pNum:pNum++,
+        PostText,
+        name,
     });
+    return res.send('postList success');
+});
+app.post('/api/memList', function(req,res){
+    const {boardText, name} = req.body;
+    MemList.push({
+        no:no++,
+        boardText,
+        name,
+    });
+    return res.send('memList success');
 });
 
 const server = http.createServer(app);
 server.listen(port, function() {
     console.log("서버 실행 중 >>> http://localhost:"+port);
 });
-
-// 실제 웹 서버 구축에서는 Nodejs만 사용하지 않고 express를 더 많이 사용합니다.

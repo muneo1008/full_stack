@@ -1,0 +1,14 @@
+<% 
+                                // 이 부분은 자바스크립트 문법
+                                boardNo.forEach(function(board) {
+                            %>
+                                <tr align="center">
+                                    <td><%= board.no %></td>
+                                    <td><%= board.boardText %></a></td>
+                                    <td><%= board.name %></td>
+                                    <td><button>수정</button></td>
+                                    <td><button>삭제</button></td>
+                                </tr>
+                            <%
+                                });
+                            %>

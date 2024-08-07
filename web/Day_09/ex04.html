@@ -40,6 +40,10 @@
             line-height: 100px;
             box-sizing: border-box;
         }
+        img{
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -56,9 +60,9 @@
     Box.prototype.init = function(text) {
         this.newBox = document.createElement("Box");
         this.elementUl = document.createElement("ul");
-        for(var i=0; i<10; i++) {
+        for(var i=1; i<=10; i++) {
             this.elementLi = document.createElement("li");
-            this.elementLi.innerText = i;
+            this.elementLi.innerHTML = `<img src="imgs/img${i}.png">`;
             this.elementUl.appendChild(this.elementLi);
         }
         this.newBox.appendChild(this.elementUl);
@@ -109,7 +113,7 @@
     startBtn.addEventListener('click', function(event) {
         if(startFlag == 0){
             boxArr.forEach(function(box){
-                box.start(10);
+                box.start(Math.floor(5 + Math.random()*20));
             })
             startFlag = 1;
         }

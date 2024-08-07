@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .container{
+            text-align: center;
+            background-color: lightgray;
+            border-radius: 15px;
+            padding: 20px;
+            width: 800px;
+            height: 750px;
+        }
+        #head{
+            margin: 0;
+            border-radius: 15px;
+        }
+        .inputArea{
+            margin: 20px;
+        }
+        .inputArea #title{
+            width: 600px;
+            height: 30px;
+            border-radius: 10px;
+            
+        }
+        .inputArea #saveBtn{
+            width: 100px;
+            font-weight: bold;
+            font-size: medium;
+            border-radius: 10px;
+            font-size: x-large;
+            vertical-align: middle;
+            background-color: #433E49;
+            color: white;
+        }
+        #listArea{
+            padding: 0;
+            width: 730px;
+            text-align: left;
+            padding-left: 40px;
+        }
+        #title{
+            font-size: medium;
+            font-weight: bold;
+        }
+        li{
+            list-style-type: none;
+            background-color: #F3E8EB;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: x-large;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+        #Btn{
+            float: right;
+        }
+        .editBtn, .delBtn{
+            font-size: x-large;
+            border-radius: 5px;
+            background-color: #DBC1AD;
+            font-weight: bold;
+        }
+        .editText{
+            font-size: x-large;
+            font-weight: bold;
+            display: none;
+            width: 400px;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="head">Todo List</h1>
+        </header>
+        <div class="inputArea">
+            <input type="text" id="title">
+            <button id="saveBtn">SAVE</button>
+        </div>
+        
+        <ul id="listArea"></ul>
+    </div>
+    
+
+    <script>
+        $(function(){
+            $('#saveBtn').on('click', function(){
+                if($("li").length < 10){
+                    if($('#title').val()){
+                        $('#listArea').append(`<li>
+                            <span>${ $('#title').val() }</span>
+                            <input type="text" class="editText" placeholder="수정 후 엔터키를 눌러주세요.">
+                            <div id="Btn">
+                                <button class="editBtn">EDIT</button>
+                                <button class="delBtn">DELETE</button>
+                            </div>
+                        </li>`);
+                        $('.delBtn').on('click', function(e){
+                            $(e.target).parent().parent().remove();
+                            console.log('삭제');
+                        });
+                        $('.editBtn').on('click', function(e){
+                            const liEle = $(e.target).parent().parent();
+                            liEle.find('span').hide();
+                            liEle.find('.editText').show();
+                            $('.editText').keypress(function(e){
+                                if(e.keyCode && e.keyCode == 13){
+                                    if(liEle.find('.editText').val()){
+                                        liEle.find('span').text(liEle.find('.editText').val());
+                                        liEle.find('.editText').hide();
+                                        liEle.find('span').show();
+                                    }else{
+                                        alert('수정 내용을 입력해주세요');
+                                        liEle.find('.editText').focus();
+                                        return false;
+                                    }
+                                    return false;
+                                }
+                            })
+                            console.log('수정');
+    
+                        });
+                        $('#title').val("");
+                        $('#title').focus();
+                    }else{
+                        alert('제목을 입력하세요.');
+                        $('#title').focus();
+                        return;
+                    }
+                }else{
+                    alert('최대 리스트 갯수 입니다.');
+                    return;
+                }
+                
+                
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <style>
+        img{
+            width: 200px;
+            height: 240px;;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid p-5 bg-primary text-white text-center">
+            <h1>Temu</h1>
+            <p>저렴하고 평점이 높은 제품. 당신이 원하는 모든 것을 찾으세요.</p>
+        </div>
+        <div class="container-fluid p-3 border-bottom">
+            <div class="row">
+                <div class="col-sm-9">상품 리스트</div>
+                <div class="col-sm-3">장바구니</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-fluid p-3">
+            <div class="row">
+                <div class="col-sm-9 border-end p-3 h-100">
+                    <div class="container">
+                        <div id="itemList" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                        </div>
+                    </div>
+                </div>
+                <div id="aaa" class="col-sm-3">
+                    <div id="totalArea"></div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-success m-1" onclick="purchase()">구매하기</button>
+                    </div>
+                    <div id="ListInfo"></div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const items = [
+            { id: 1, name: "책", price: "20000", imgSrc: "imgs/item1.png" },
+            { id: 2, name: "공책", price: "15000", imgSrc: "imgs/item2.png" },
+            { id: 3, name: "책상", price: "50000", imgSrc: "imgs/item3.png" },
+            { id: 4, name: "노트북", price: "1000000", imgSrc: "imgs/item4.png" },
+            { id: 5, name: "반바지", price: "3000", imgSrc: "imgs/item5.png" },
+            { id: 6, name: "반팔", price: "2000", imgSrc: "imgs/item6.png" }
+        ]
+        const buyList = []
+        function draw() {
+            var itemArea = document.getElementById('itemList');
+            items.forEach(function (item) {
+                itemArea.innerHTML += `<div class="col">
+                                <div id="eachitem" class="card shadow-sm">
+                                    <img class="card-img-top" src="${item.imgSrc}" alt="Title" />
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold">상품명: ${item.name}</h5>
+                                        <p class="card-text fw-bold">가격: ${item.price}원</p>
+                                        <button type="button" class="addBtn btn btn-primary" onclick="plusitem(${item.id})">장바구니 담기</button>
+                                    </div>
+                                </div>
+                            </div>`;
+            })
+        }
+        function buyDraw(){
+            var buyArea = document.getElementById('ListInfo');
+            buyArea.innerHTML="";
+            buyList.forEach(function(item){
+                buyArea.innerHTML += `<div class="col h6 mb-3 bg-primary text-white rounded p-2 fw-bold">
+                        <p>${item.name} - 수량: ${item.num}</p>
+                        <p>가격: ${item.num * item.price}원</p>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-danger" onclick="plusitem(${item.id})">+</button>
+                            <button type="button" class="btn btn-warning" onclick="minusitem(${item.id})">-</button>
+                        </div>
+                    </div>`;
+            })
+            totalPrice();
+        }
+        draw();
+        buyDraw();
+        function totalPrice(){
+            var totalPrice = 0;
+            const totalArea = document.getElementById('totalArea');
+            buyList.forEach(function(item){
+                totalPrice += item.num * item.price;
+            })
+            totalArea.innerHTML = `<div class="fw-bold">총가격: ${totalPrice}원</div>`;
+            return totalPrice;
+        }
+        function plusitem(itemId) {
+            const item = items.find(i => i.id === itemId);
+            const buyItem = buyList.find(b => b.id === itemId);
+            if (buyItem) {
+                buyItem.num++;
+                console.log(`${item.name} +1`);
+            } else {
+                buyList.push({ ...item, num: 1 });
+                console.log(`장바구니 추가: ${item.name}`);
+            }
+            buyDraw();
+            totalPrice()
+        }
+        function minusitem(itemId) {
+            const item = items.find(i => i.id === itemId);
+            const buyItem = buyList.find(b => b.id === itemId);
+            if (buyItem) {
+                if(buyItem.num > 1){
+                     buyItem.num--;
+                     console.log(`${item.name} -1`);
+                }
+                else {
+                    buyList.splice(item,1);
+                    console.log(`장바구니 제거: ${item.name}`);
+                }
+                
+            }
+            buyDraw();
+            totalPrice();
+        }
+
+        function purchase(){
+            alert(`미구현`);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

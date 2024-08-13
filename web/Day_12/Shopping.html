@@ -107,7 +107,7 @@
             const buyItem = buyList.find(b => b.id === itemId);
             if (buyItem) {
                 buyItem.num++;
-                console.log(`${item.name} +1`);
+                console.log(`${item.name} +1, 현재 수량: ${buyItem.num}`);
             } else {
                 buyList.push({ ...item, num: 1 });
                 console.log(`장바구니 추가: ${item.name}`);
@@ -121,11 +121,16 @@
             if (buyItem) {
                 if(buyItem.num > 1){
                      buyItem.num--;
-                     console.log(`${item.name} -1`);
+                     console.log(`${item.name} -1, 남은 수량: ${buyItem.num}`);
                 }
                 else {
-                    buyList.splice(item,1);
-                    console.log(`장바구니 제거: ${item.name}`);
+                    if(confirm(`${item.name}을 장바구니에서 제거하시겠습니까?`)==true){
+                        buyList.splice(item,1);
+                        console.log(`장바구니 제거: ${item.name}`);
+                    }else{
+                        return;
+                    }
+                    
                 }
                 
             }
@@ -134,7 +139,12 @@
         }
 
         function purchase(){
-            alert(`미구현`);
+            if(confirm(`총가격: ${totalPrice()}원입니다. 구매하시겠습니까?`)==true){
+                
+            }else{
+                return;
+            }
+            
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
